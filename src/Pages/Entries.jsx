@@ -11,7 +11,7 @@ import MyButton from "../components/UI/button/MyButton";
 import addBtn from "../assets/images/add.svg";
 import { Link } from "react-router-dom";
 
-function Entries() {
+function Entries({allPosts, setAllPosts}) {
   const [posts, setPosts] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [limit, setLimit] = useState(5);
@@ -44,7 +44,15 @@ function Entries() {
 
   useEffect(() => {
     fetchPosts();
-  }, [page, filter]);
+  }, [page, filter, allPosts]);
+
+	const onDeletePost = (post) => {
+		setPosts(posts.filter(p => p.id !== post))
+		setAllPosts(allPosts.filter(p=> p.id !== post))
+		if (post % limit === 1) {
+			setPage(page - 1)
+		}
+	}
 
   return (
     <div className="App">
@@ -61,6 +69,7 @@ function Entries() {
         <Loader />
       ) : (
         <PostList
+					onDeletePost = {onDeletePost}
           posts={posts}
           title="List of entries"
         />

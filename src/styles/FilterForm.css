@@ -71,6 +71,12 @@
 	padding: 0;
 }
 
+.filterForm__bot {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+}
+
 .filterForm__filter_content-date {
 	font-family: 'Title';
 	color: lightgray;

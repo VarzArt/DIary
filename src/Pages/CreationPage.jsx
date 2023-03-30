@@ -8,7 +8,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import backBtn from '../assets/images/back.svg'
 import Tooltip from '../components/UI/tooltip/Tooltip';
 
-const CreationPage = ({post, setPost}) => {
+const CreationPage = ({post, setPost, allPosts, setAllPosts}) => {
 
 	const navigate = useNavigate();
 
@@ -70,6 +70,13 @@ const CreationPage = ({post, setPost}) => {
 			date: Date.now(),
 			avatar: post.avatar || 'https://img1.akspic.ru/crops/4/2/5/2/7/172524/172524-spiderman-chelovek_pauk-chudo_chelovek_pauk_majl_morales-supergeroj-majlz_morales-1920x1080.jpg',
 		});
+		setAllPosts([...allPosts, {
+			id: allPosts[allPosts.length - 1].id + 1,
+			title: post.title[0].toUpperCase() + post.title.slice(1),
+			body: post.body,
+			date: Date.now(),
+			avatar: post.avatar || 'https://img1.akspic.ru/crops/4/2/5/2/7/172524/172524-spiderman-chelovek_pauk-chudo_chelovek_pauk_majl_morales-supergeroj-majlz_morales-1920x1080.jpg',
+		}])
 		setPost({
 			title: '',
 			body: '',

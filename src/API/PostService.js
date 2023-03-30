@@ -4,6 +4,11 @@ const link = "http://localhost:3000/posts"
 
 export default class PostService {
 
+	static async getAllPosts() {
+		const response = await axios.get(link)
+		return response
+	}
+
   static async getAll(limit = 5, page = 1) {
     const response = await axios.get(link, {
 			params: {

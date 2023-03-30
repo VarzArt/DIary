@@ -93,6 +93,7 @@ const PostItem = (props) => {
 				onDeleteComment = {onDeleteComment}
       />
       <Modal
+				onDeletePost = {props.onDeletePost}
         active={modalVisible}
         setActive={setModalVisible}
         post={props.post}

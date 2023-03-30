@@ -5,7 +5,7 @@ import no from '../../../assets/images/no.svg'
 import axios from 'axios';
 import Tooltip from '../tooltip/Tooltip';
 
-const DeleteModal = ({tooltip, visibleModal, setVisibleModal, setActive, post, visible, setVisible}) => {
+const DeleteModal = ({tooltip, visibleModal, setVisibleModal, setActive, post, visible, setVisible, ...props}) => {
 
 	const removePost = async() => {
 		await axios.delete(`http://localhost:3000/posts/${post}`)
@@ -15,6 +15,7 @@ const DeleteModal = ({tooltip, visibleModal, setVisibleModal, setActive, post, v
 			setVisibleModal(false)
 			setVisible({...tooltip, delete: false})
 		}, 1500)
+		props.onDeletePost(post)
 	}
 
 	const rootClass = visibleModal ? 'deleteModal active' : 'deleteModal'

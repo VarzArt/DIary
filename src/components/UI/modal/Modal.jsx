@@ -10,7 +10,7 @@ import DeleteModal from "../deleteModal/deleteModal";
 import Tooltip from "../tooltip/Tooltip";
 import undo from "../../../assets/images/undo.svg"
 
-const Modal = ({ active, setActive, post}) => {
+const Modal = ({ active, setActive, post, ...props}) => {
 
 	const [editPost, setEditPost] = useState({title: post.title, body: post.body})
 	const [visible, setVisible] = useState(false)
@@ -106,7 +106,7 @@ const Modal = ({ active, setActive, post}) => {
 				<MyButton src = {backBtn} onClick = {() => setActive(false)}>Back to entries</MyButton>
 				</div>
       </div>
-			<DeleteModal tooltip = {tooltip} visible = {tooltip.delete} setVisible = {setTooltip} post = {post.id} setActive = {setActive} visibleModal = {visible} setVisibleModal={setVisible}/>
+			<DeleteModal onDeletePost = {props.onDeletePost} tooltip = {tooltip} visible = {tooltip.delete} setVisible = {setTooltip} post = {post.id} setActive = {setActive} visibleModal = {visible} setVisibleModal={setVisible}/>
 			<Tooltip visible = {tooltip.edit}>The entry has been changed successfully!</Tooltip>
     </div>
   );
