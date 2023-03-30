@@ -1,0 +1,51 @@
+.main {
+	margin-top: 8rem;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	flex-direction: column;
+	align-items: center;
+}
+
+.title {
+	font-family: 'TItle', sans-serif;
+	font-size: 3rem;
+	margin-top: 5rem;
+	color: lightgray;
+}
+
+.clockLoader {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 4rem;
+  height: 4rem;
+  border: 3px solid lightgray;
+  border-radius: 50%;
+	transform: scale(3);
+}
+.clockLoader::before, .clockLoader::after {
+  position: absolute;
+  content: "";
+  top: .5rem;
+  width: .2rem;
+  background: lightgray;
+  border-radius: 10px;
+  transform-origin: center calc(100% - .1rem);
+  animation: spin infinite linear;
+}
+.clockLoader::before {
+  height: 1.6rem;
+  animation-duration: 2s;
+}
+.clockLoader::after {
+  top: 1.3rem;
+  height: .8rem;
+  animation-duration: 15s;
+}
+@keyframes spin {
+  to {
+    transform: rotate(1turn);
+  }
+}

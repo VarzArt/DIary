@@ -1,0 +1,56 @@
+.group {
+  position: relative;
+  padding: 1rem 0 0;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.field {
+  width: 100%;
+  border-bottom: 0.1em solid lightgray;
+  font-family: "Title", sans-serif;
+  color: white;
+  font-size: 1.5rem;
+  padding: 0.5em 0;
+  background: transparent;
+  transition: border-color 0.15s ease-in-out;
+}
+
+.field::placeholder {
+  color: transparent;
+}
+
+.field:placeholder-shown ~ .label {
+  font-size: 1.3em;
+  top: 1.5em;
+  pointer-events: none;
+}
+
+.label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: lightgray;
+  font-family: "Title", sans-serif;
+}
+
+.field:focus {
+  padding-bottom: 0.5em;
+  border-color: white;
+}
+
+.field:focus ~ .label {
+  position: absolute;
+  top: 0;
+  display: block;
+  transition: 0.2s;
+  font-size: 1rem;
+  color: lightgray;
+}
+
+.field:required,
+.field:invalid {
+  box-shadow: none;
+}

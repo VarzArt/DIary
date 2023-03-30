@@ -1,0 +1,100 @@
+.filterForm__title {
+	text-align: center;
+  font-size: 3rem;
+  padding: 2rem;
+  font-family: "Title", sans-serif;
+  color: lightgrey;
+  letter-spacing: 0.1rem;
+  position: relative;
+  text-shadow: 0 7px 14px rgba(0, 0, 0, 0.25), 0 5px 5px rgba(0, 0, 0, 0.22);
+  user-select: none;
+}
+
+.filterForm__content {
+	border: 1px solid rgba(255, 255, 255, 0.125);
+	backdrop-filter: blur(10px);
+	border-radius: 1rem;
+	padding: 1rem;
+}
+
+.filterForm__title::before,
+.filterForm__title::after {
+  content: "";
+  position: absolute;
+  height: 2px;
+  width: 35%;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0;
+  background-image: linear-gradient(to left, lightgray, transparent);
+}
+
+.filterForm__title::after {
+  right: 0;
+  background-image: linear-gradient(to right, lightgray, transparent);
+  left: unset;
+}
+
+.filterForm__sort {
+	display: flex;
+	flex-direction: column;
+}
+
+.filterForm__sort_title,
+.filterForm__filter_title {
+	font-family: 'Title', sans-serif;
+	font-size: 2rem;
+	color: lightgray;
+	user-select: none;
+	padding: 1.5rem 0;
+}
+
+.filterFomr__sort_btns {
+	width: 40%;
+	display: flex;
+	justify-content: space-between;
+}
+
+.filterForm__filter_content {
+	padding: 0 2rem;
+}
+
+.filterForm__filter_content-date-title,
+.filterForm__filter_content-name-title {
+	font-family: 'Title', sans-serif;
+	color: lightgray;
+	font-size: 1.5rem;
+	padding: 2rem 0;
+}
+
+.filterForm__filter_content-name-title {
+	padding: 0;
+}
+
+.filterForm__filter_content-date {
+	font-family: 'Title';
+	color: lightgray;
+}
+
+.filterForm__filter_content-date input {
+	margin: 0 1rem;
+	color: lightgray;
+	font-family: 'Title', sans-serif;
+	font-size: 1rem;
+	padding: 1rem;
+	background: rgba(0,0,0,.5);
+	border: 1px solid rgba(255, 255, 255, 0.125);
+	border-radius: 1rem;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+	color: rgba(0, 0, 0, 0);
+	opacity: 1;
+	display: block;
+	background: url(../assets/images/calendar.svg) no-repeat;
+	width: 1.5rem;
+	height: 1.5rem;
+	margin-left: 1rem;
+	border-width: thin;
+	background-position: center;
+}

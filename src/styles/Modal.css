@@ -1,0 +1,126 @@
+.modal__active {
+	position: fixed;
+	width: 100%;
+	height: max-content;
+	bottom: 0;
+	left: 50%;
+	transform: translateX(-50%);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.modal__main {
+	display: none;
+}
+
+.modal__content {
+	background-color: rgba(0, 0, 0, 1);
+  border: 1px solid rgba(255, 255, 255, 0.125);
+  border-radius: 1rem;
+	width: 100%;
+	box-shadow: 0 0 2rem lightgray;
+	height: max-content;
+	padding: 1rem;
+	display: flex;
+	flex-direction: column;
+	overflow-y: scroll;
+}
+
+.modal__content::-webkit-scrollbar {
+	width: .25rem;
+}
+
+.modal__content::-webkit-scrollbar-track {
+	background:transparent;
+}
+
+.modal__content::-webkit-scrollbar-thumb {
+	background-image: linear-gradient(transparent, lightgray, transparent);
+	border-radius: 1rem;
+}
+
+.modal__title {
+	text-align: center;
+  font-size: 3rem;
+  padding-top: 2rem;
+  font-family: "Title", sans-serif;
+  color: lightgrey;
+  letter-spacing: 0.1rem;
+  position: relative;
+  text-shadow: 0 7px 14px rgba(0, 0, 0, 0.25), 0 5px 5px rgba(0, 0, 0, 0.22);
+  user-select: none;
+}
+
+.modal__title::after,
+.modal__title::before {
+	content: "";
+  position: absolute;
+  height: 2px;
+  width: 37.5%;
+  top: 75%;
+  transform: translateY(-75%);
+  left: 0;
+  background-image: linear-gradient(to left, lightgray, transparent);
+}
+
+.modal__title::after {
+	right: 0;
+  background-image: linear-gradient(to right, lightgray, transparent);
+  left: unset;
+}
+
+.modal__titleBlock,
+.modal__bodyBlock {
+	font-family: 'Title', sans-serif;
+	color: lightgray;
+	font-size: 1.5rem;
+	margin-top: 1rem;
+}
+
+
+.modal__file {
+	font-family: 'Title', sans-serif;
+	font-size: 1.5rem;
+	margin-top: 2rem;
+	background: transparent;
+	color: lightgray;
+}
+
+.modal__buttons {
+	margin-top: 2rem;
+	display: flex;
+	justify-content: space-evenly;
+}
+
+.deleteModal {
+	position: fixed;
+	width: 90%;
+	height: 100%;
+	justify-content: center;
+	align-items: center;
+	background-color: rgba(0,0,0,.9);
+	border-radius: 1rem;
+	display: none;
+}
+
+.deleteModal.active {
+	display: flex;
+}
+
+.deleteModal__main {
+	background-color: black;
+	box-shadow: 0 0 2rem lightgray;
+	border-radius: 1rem;
+	padding: 2rem;
+	font-family: 'Title', sans-serif;
+	color: lightgray;
+	font-size: 2rem;
+	width: 50%;
+}
+
+.deleteModal__main_buttons {
+	display: flex;
+	justify-content: space-evenly;
+	margin-top: 3rem;
+}
