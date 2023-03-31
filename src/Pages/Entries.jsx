@@ -34,6 +34,7 @@ function Entries({allPosts, setAllPosts}) {
 			getPages(response)
 		} else  {
 			const response = await PostService.getFilterAndSort(limit, page, filter.sort, filter.query, Date.parse(filter.dateBot), Date.parse(filter.dateTop))
+			console.log(filter.query);
 			getPages(response)
 		}
   });

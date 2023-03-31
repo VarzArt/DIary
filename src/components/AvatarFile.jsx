@@ -6,7 +6,7 @@ import '../styles/Cropper.css'
 const AvatarFile = ({post, setPost}) => {
 
 	const defaultSrc =
-  "https://img1.akspic.ru/crops/4/2/5/2/7/172524/172524-spiderman-chelovek_pauk-chudo_chelovek_pauk_majl_morales-supergeroj-majlz_morales-1920x1080.jpg";
+  "https://img3.akspic.ru/crops/1/9/1/0/5/150191/150191-igri-elektrik-pressa-sina_korp-gadzhet-1920x1080.jpg";
 
 	const [image, setImage] = useState(defaultSrc);
   const [cropData, setCropData] = useState("");

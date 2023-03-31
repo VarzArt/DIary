@@ -62,20 +62,23 @@ const CreationPage = ({post, setPost, allPosts, setAllPosts}) => {
 		}
 	}
 
+
+	const postAvatar = post.avatar === '#' ? 'https://img3.akspic.ru/crops/1/9/1/0/5/150191/150191-igri-elektrik-pressa-sina_korp-gadzhet-1920x1080.jpg' : post.avatar
+
 	const addNewPost = (e) => {
 		e.preventDefault();
     axios.post('http://localhost:3000/posts', {
 			title: post.title[0].toUpperCase() + post.title.slice(1),
 			body: post.body,
 			date: Date.now(),
-			avatar: post.avatar || 'https://img1.akspic.ru/crops/4/2/5/2/7/172524/172524-spiderman-chelovek_pauk-chudo_chelovek_pauk_majl_morales-supergeroj-majlz_morales-1920x1080.jpg',
+			avatar: postAvatar
 		});
 		setAllPosts([...allPosts, {
 			id: allPosts[allPosts.length - 1].id + 1,
 			title: post.title[0].toUpperCase() + post.title.slice(1),
 			body: post.body,
 			date: Date.now(),
-			avatar: post.avatar || 'https://img1.akspic.ru/crops/4/2/5/2/7/172524/172524-spiderman-chelovek_pauk-chudo_chelovek_pauk_majl_morales-supergeroj-majlz_morales-1920x1080.jpg',
+			avatar: postAvatar,
 		}])
 		setPost({
 			title: '',
@@ -89,7 +92,7 @@ const CreationPage = ({post, setPost, allPosts, setAllPosts}) => {
   };
 
 	return (
-		<form>
+		<form style={{minWidth: '1200px'}}>
 		<MyInput
 			name = 'title'
 			value={post.title}

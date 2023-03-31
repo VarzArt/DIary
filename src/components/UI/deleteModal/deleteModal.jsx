@@ -14,8 +14,8 @@ const DeleteModal = ({tooltip, visibleModal, setVisibleModal, setActive, post, v
 			setActive(false)
 			setVisibleModal(false)
 			setVisible({...tooltip, delete: false})
+			props.onDeletePost(post)
 		}, 1500)
-		props.onDeletePost(post)
 	}
 
 	const rootClass = visibleModal ? 'deleteModal active' : 'deleteModal'
