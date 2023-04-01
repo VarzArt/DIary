@@ -3,6 +3,7 @@ import MyInput from './UI/input/MyInput';
 import add from '../assets/images/add_comment.svg';
 import MyButton from './UI/button/MyButton';
 import axios from 'axios';
+import Tooltip from './UI/tooltip/Tooltip';
 
 const CommentForm = ({
   post,
@@ -17,11 +18,16 @@ const CommentForm = ({
       avatar:
         'https://ds.obmenvsemfiles.net/fo/get/5677916/neon_mask_boy_city_4k_6h-nashobmen.org.jpg',
     });
+		setTooltip(true)
+		setTimeout(() => {
+			setTooltip(false)
+		},1500)
     onAddComment();
     props.setBody('');
   };
 
   const [valid, setValid] = useState(true);
+	const [tooltip, setTooltip] = useState(false)
 
   const isValid = (e) => {
 		props.setBody(e.target.value);
@@ -51,6 +57,7 @@ const CommentForm = ({
       >
         Add comment!
       </MyButton>
+			<Tooltip visible = {tooltip}>The comment was added successfully!</Tooltip>
     </div>
   );
 };
