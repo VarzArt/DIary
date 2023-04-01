@@ -1,17 +1,17 @@
 .main {
-	margin-top: 8rem;
-	width: 100%;
-	display: flex;
-	justify-content: center;
-	flex-direction: column;
-	align-items: center;
+  margin-top: 8rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .title {
-	font-family: 'TItle', sans-serif;
-	font-size: 3rem;
-	margin-top: 5rem;
-	color: lightgray;
+  font-family: "TItle", sans-serif;
+  font-size: 3rem;
+  margin-top: 5rem;
+  color: lightgray;
 }
 
 .clockLoader {
@@ -23,16 +23,17 @@
   height: 4rem;
   border: 3px solid lightgray;
   border-radius: 50%;
-	transform: scale(3);
+  transform: scale(3);
 }
-.clockLoader::before, .clockLoader::after {
+.clockLoader::before,
+.clockLoader::after {
   position: absolute;
   content: "";
-  top: .5rem;
-  width: .2rem;
+  top: 0.5rem;
+  width: 0.2rem;
   background: lightgray;
   border-radius: 10px;
-  transform-origin: center calc(100% - .1rem);
+  transform-origin: center calc(100% - 0.1rem);
   animation: spin infinite linear;
 }
 .clockLoader::before {
@@ -41,7 +42,7 @@
 }
 .clockLoader::after {
   top: 1.3rem;
-  height: .8rem;
+  height: 0.8rem;
   animation-duration: 15s;
 }
 @keyframes spin {

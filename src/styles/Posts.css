@@ -1,0 +1,122 @@
+.posts__title {
+  text-align: center;
+  font-size: 3rem;
+  padding-top: 2rem;
+  font-family: "Title", sans-serif;
+  color: lightgrey;
+  letter-spacing: 0.1rem;
+  position: relative;
+  text-shadow: 0 7px 14px rgba(0, 0, 0, 0.25), 0 5px 5px rgba(0, 0, 0, 0.22);
+  user-select: none;
+}
+
+.posts__title::before,
+.posts__title::after {
+  content: "";
+  position: absolute;
+  height: 2px;
+  width: 37.5%;
+  top: 75%;
+  transform: translateY(-75%);
+  left: 0;
+  background-image: linear-gradient(to left, lightgray, transparent);
+}
+
+.posts__title::after {
+  right: 0;
+  background-image: linear-gradient(to right, lightgray, transparent);
+  left: unset;
+}
+
+.post {
+  padding: 1rem;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.125);
+  border-radius: 1rem;
+  filter: drop-shadow(0 30px 10px rgba(0, 0, 0, 0.75));
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  z-index: -1;
+}
+
+.post__content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.post__content_info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 3;
+  padding: 0 2rem;
+  min-height: 16rem;
+}
+
+.post__content_info-title {
+  font-family: "Righteous", cursive;
+  color: white;
+  font-size: 2rem;
+  text-align: end;
+  position: relative;
+  width: 100%;
+  padding-bottom: 0.25em;
+}
+
+.post__content_info-title::after {
+  position: absolute;
+  content: "";
+  height: 2px;
+  width: 90%;
+  background-image: linear-gradient(to left, lightgray, transparent);
+  bottom: 0;
+  right: 0;
+}
+
+.post__content_info-desc,
+.post__content_info-date {
+  font-family: "Lato", sans-serif;
+  color: lightgray;
+}
+
+.post__content_info-desc {
+  text-align: justify;
+  padding: 1rem 0;
+}
+
+.post__content_info-date {
+  display: flex;
+  align-items: center;
+  font-size: 0.75rem;
+}
+
+.post__content_info-date img {
+  width: 1.5em;
+  height: 1.5em;
+  margin-right: 0.5rem;
+}
+
+.post__content_avatar {
+  height: 16rem;
+  width: 16rem;
+  border-radius: 10%;
+  flex: 1;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+}
+
+.post__content_info-bot {
+  display: flex;
+  justify-content: space-between;
+}
+
+.posts__title_none {
+  font-family: "Title", sans-serif;
+  color: lightgray;
+  font-size: 3rem;
+  text-align: center;
+  padding: 2rem;
+}

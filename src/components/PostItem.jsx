@@ -47,7 +47,7 @@ const PostItem = (props) => {
 				setAllComments(responseAll.data)
         setComments(response.data);
       } catch (error) {
-        console.log('Ошибка получения комментариев', JSON.parse(error), error);
+        console.log('Error receiving comments', JSON.parse(error), error);
       }
     };
     fetchComments();

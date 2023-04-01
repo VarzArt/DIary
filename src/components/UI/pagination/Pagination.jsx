@@ -1,5 +1,6 @@
 import React from 'react';
 import { usePagination } from '../../../hooks/usePagination';
+import '../../../styles/Pagination.css'
 
 const Pagination = ({totalPages, page, changePage}) => {
 

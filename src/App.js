@@ -22,7 +22,7 @@ function App() {
         const response = await PostService.getAllPosts();
         setAllPosts(response.data);
       } catch (error) {
-        console.log("Ошибка получения комментариев", JSON.parse(error), error);
+        console.log("Error receiving diary entries", JSON.parse(error), error);
       }
     };
     fetchAllPosts();
@@ -31,10 +31,24 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/main" element={<Entries allPosts = {allPosts} setAllPosts = {setAllPosts}/>} />
+        <Route
+          path="/main"
+          element={
+						<Entries 
+							allPosts={allPosts} 
+							setAllPosts={setAllPosts} 
+						/>}
+        />
         <Route
           path="/create"
-          element={<CreationPage allPosts = {allPosts} setAllPosts = {setAllPosts} post={post} setPost={setPost} />}
+          element={
+            <CreationPage
+              allPosts={allPosts}
+              setAllPosts={setAllPosts}
+              post={post}
+              setPost={setPost}
+            />
+          }
         />
         <Route path="/*" element={<Navigate to="/main" replace />} />
       </Routes>

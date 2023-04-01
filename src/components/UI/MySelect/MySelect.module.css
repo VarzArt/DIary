@@ -1,12 +1,11 @@
 .select {
-	background: rgba(0,0,0,.5);
-	font-family: 'Title', sans-serif;
-	font-size: 1rem;
-	color: lightgray;
-	border: 1px solid rgba(255, 255, 255, 0.125);
-	padding: 1rem;
-	border-radius: 1rem;
-	backdrop-filter: blur(1rem);
-	width: 85%;
+  background: rgba(0, 0, 0, 0.5);
+  font-family: "Title", sans-serif;
+  font-size: 1rem;
+  color: lightgray;
+  border: 1px solid rgba(255, 255, 255, 0.125);
+  padding: 1rem;
+  border-radius: 1rem;
+  backdrop-filter: blur(1rem);
+  width: 85%;
 }
-
