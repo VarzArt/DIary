@@ -1,53 +1,63 @@
-import React, { useEffect, useState } from 'react';
-import clock from '../assets/images/clock.svg';
-import MyButton from './UI/button/MyButton';
-import arrowDowm from '../assets/images/arrow_down.svg';
-import Comments from './Comments';
-import edit from '../assets/images/edit.svg';
-import Modal from './UI/modal/Modal';
-import PostService from '../API/PostService';
+import React, { useEffect, useState } from "react";
+import clock from "../assets/images/clock.svg";
+import MyButton from "./UI/button/MyButton";
+import arrowDowm from "../assets/images/arrow_down.svg";
+import Comments from "./Comments";
+import edit from "../assets/images/edit.svg";
+import Modal from "./UI/modal/Modal";
+import PostService from "../API/PostService";
 
 const PostItem = (props) => {
-	const [allComments, setAllComments] = useState([])
+  const [allComments, setAllComments] = useState([]);
   const [comments, setComments] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [visibleComments, setVisibleComments] = useState(false);
-  const [commentBody, setCommentBody] = useState('');
+  const [commentBody, setCommentBody] = useState("");
 
   const onOpenComments = () => {
     setVisibleComments(true);
   };
 
-	const onAddComment = () => {
-		setComments([...comments , {
-			id: allComments[allComments.length - 1].id + 1,
-			name: 'Varzumov Nikita Andreevich',
-			body: commentBody,
-			role: 'admin',
-			avatar: 'https://ds.obmenvsemfiles.net/fo/get/5677916/neon_mask_boy_city_4k_6h-nashobmen.org.jpg',
-		}]);
-		setAllComments([...allComments, {
-			id: allComments[allComments.length - 1].id + 1,
-			name: 'Varzumov Nikita Andreevich',
-			body: commentBody,
-			role: 'admin',
-			avatar: 'https://ds.obmenvsemfiles.net/fo/get/5677916/neon_mask_boy_city_4k_6h-nashobmen.org.jpg',
-		}])
-	};
+  const onAddComment = () => {
+    setComments([
+      ...comments,
+      {
+        id: allComments[allComments.length - 1].id + 1,
+        name: "Varzumov Nikita Andreevich",
+        body: commentBody,
+        role: "admin",
+        avatar:
+          "https://ds.obmenvsemfiles.net/fo/get/5677916/neon_mask_boy_city_4k_6h-nashobmen.org.jpg",
+      },
+    ]);
+    setAllComments([
+      ...allComments,
+      {
+        id: allComments[allComments.length - 1].id + 1,
+        name: "Varzumov Nikita Andreevich",
+        body: commentBody,
+        role: "admin",
+        avatar:
+          "https://ds.obmenvsemfiles.net/fo/get/5677916/neon_mask_boy_city_4k_6h-nashobmen.org.jpg",
+      },
+    ]);
+		console.log(allComments);
+  };
 
-	const onDeleteComment = (comment) => {
-		setComments(comments.filter(c => c.id !== comment.id))
-	}
+  const onDeleteComment = (comment) => {
+    setComments(comments.filter((c) => c.id !== comment.id));
+		setAllComments(allComments.filter(c => c.id !== comment.id))
+  };
 
   useEffect(() => {
     const fetchComments = async () => {
       try {
         const response = await PostService.getComments(props.post.id);
-				const responseAll = await PostService.getAllComments();
-				setAllComments(responseAll.data)
+        const responseAll = await PostService.getAllComments();
+        setAllComments(responseAll.data);
         setComments(response.data);
       } catch (error) {
-        console.log('Error receiving comments', JSON.parse(error), error);
+        console.log("Error receiving comments", JSON.parse(error), error);
       }
     };
     fetchComments();
@@ -71,7 +81,7 @@ const PostItem = (props) => {
             </div>
             <MyButton
               src={edit}
-              style={{ marginLeft: 'auto', marginRight: '1rem' }}
+              style={{ marginLeft: "auto", marginRight: "1rem" }}
               onClick={() => setModalVisible(true)}
             >
               Edit entry
@@ -85,15 +95,15 @@ const PostItem = (props) => {
       <Comments
         post={props.post}
         onAddComment={onAddComment}
-				setCommentBody={setCommentBody}
+        setCommentBody={setCommentBody}
         comments={comments}
         visible={visibleComments}
         setVisible={setVisibleComments}
-				commentBody = {commentBody}
-				onDeleteComment = {onDeleteComment}
+        commentBody={commentBody}
+        onDeleteComment={onDeleteComment}
       />
       <Modal
-				onDeletePost = {props.onDeletePost}
+        onDeletePost={props.onDeletePost}
         active={modalVisible}
         setActive={setModalVisible}
         post={props.post}
