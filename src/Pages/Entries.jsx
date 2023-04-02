@@ -10,7 +10,7 @@ import MyButton from "../components/UI/button/MyButton";
 import addBtn from "../assets/images/add.svg";
 import { Link } from "react-router-dom";
 
-function Entries({ allPosts, setAllPosts }) {
+function Entries({ allPosts, setAllPosts, ...props }) {
   const [posts, setPosts] = useState([]);
   const [totalPages, setTotalPages] = useState(0);
   const [limit] = useState(5);
@@ -50,12 +50,12 @@ function Entries({ allPosts, setAllPosts }) {
 
   useEffect(() => {
     fetchPosts();
-  }, [page, filter, allPosts]);
+  }, [page, filter, allPosts, props.post]);
 
-  const onDeletePost = (post) => {
+  const onDeletePost = (post, number) => {
     setPosts(posts.filter((p) => p.id !== post));
     setAllPosts(allPosts.filter((p) => p.id !== post));
-    if (post % limit === 1) {
+    if (allPosts.length % limit === 1) {
       setPage(page - 1);
     }
   };
@@ -87,6 +87,7 @@ function Entries({ allPosts, setAllPosts }) {
           onDeletePost={onDeletePost}
           posts={posts}
           title="List of entries"
+          setPost={props.setPost}
         />
       )}
       <Pagination page={page} changePage={changePage} totalPages={totalPages} />

@@ -14,10 +14,6 @@ const PostItem = (props) => {
   const [visibleComments, setVisibleComments] = useState(false);
   const [commentBody, setCommentBody] = useState("");
 
-  const onOpenComments = () => {
-    setVisibleComments(true);
-  };
-
   const onAddComment = () => {
     setComments([
       ...comments,
@@ -41,7 +37,6 @@ const PostItem = (props) => {
           "https://ds.obmenvsemfiles.net/fo/get/5677916/neon_mask_boy_city_4k_6h-nashobmen.org.jpg",
       },
     ]);
-		console.log(allComments);
   };
 
   const onDeleteComment = (comment) => {
@@ -86,7 +81,7 @@ const PostItem = (props) => {
             >
               Edit entry
             </MyButton>
-            <MyButton src={arrowDowm} onClick={onOpenComments}>
+            <MyButton src={arrowDowm} onClick={() => setVisibleComments(true)}>
               Show comments
             </MyButton>
           </div>
@@ -107,6 +102,7 @@ const PostItem = (props) => {
         active={modalVisible}
         setActive={setModalVisible}
         post={props.post}
+				setPost = {props.setPost}
       />
     </div>
   );

@@ -34,10 +34,13 @@ function App() {
         <Route
           path="/main"
           element={
-						<Entries 
-							allPosts={allPosts} 
-							setAllPosts={setAllPosts} 
-						/>}
+            <Entries
+              allPosts={allPosts}
+              setAllPosts={setAllPosts}
+              setPost={setPost}
+              post={post}
+            />
+          }
         />
         <Route
           path="/create"

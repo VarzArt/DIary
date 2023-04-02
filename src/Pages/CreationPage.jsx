@@ -62,7 +62,7 @@ const CreationPage = ({ post, setPost, allPosts, setAllPosts }) => {
   };
 
   const postAvatar =
-    post.avatar === "#"
+    post.avatar === "#" || post.avatar === undefined
       ? "https://img3.akspic.ru/crops/1/9/1/0/5/150191/150191-igri-elektrik-pressa-sina_korp-gadzhet-1920x1080.jpg"
       : post.avatar;
 

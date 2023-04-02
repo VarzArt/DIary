@@ -10,8 +10,8 @@ const Comment = (props) => {
     axios.delete(`http://localhost:3000/comments/${props.comment.id}`);
     setTooltip(true);
     setTimeout(() => {
-      props.deleteComment(props.comment);
       setTooltip(false);
+      props.deleteComment(props.comment);
     }, 1500);
   };
 

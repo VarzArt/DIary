@@ -13,6 +13,7 @@ const PostList = ({ posts, title, ...props }) => {
             post={post}
             onDeletePost={props.onDeletePost}
             key={post.id}
+            setPost={props.setPost}
           />
         ))
       ) : (
