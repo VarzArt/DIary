@@ -2,28 +2,15 @@ import React, { useState, createRef } from "react";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import "../styles/Cropper.css";
+import { FieldArray } from "formik";
 
-const AvatarFile = ({ post, setPost }) => {
+const AvatarFile = ({ errors, values, post, setPost }) => {
   const defaultSrc =
     "https://img3.akspic.ru/crops/1/9/1/0/5/150191/150191-igri-elektrik-pressa-sina_korp-gadzhet-1920x1080.jpg";
 
   const [image, setImage] = useState(defaultSrc);
   const [cropData, setCropData] = useState("");
   const cropperRef = createRef();
-  const onChange = (e) => {
-    e.preventDefault();
-    let files;
-    if (e.dataTransfer) {
-      files = e.dataTransfer.files;
-    } else if (e.target) {
-      files = e.target.files;
-    }
-    const reader = new FileReader();
-    reader.onload = () => {
-      setImage(reader.result);
-    };
-    reader.readAsDataURL(files[0]);
-  };
 
   const getCropData = (e) => {
     e.preventDefault();
@@ -36,11 +23,57 @@ const AvatarFile = ({ post, setPost }) => {
     }
   };
 
+	const getFileSchema = (file) => file && ({
+		file: file,
+		type: file.type,
+		name: file.name
+	})
+
+	const getArrErrorMessages = (errors) => {
+		const result = []
+		errors && Array.isArray(errors) && errors.forEach((value) => {
+			if (typeof value === 'string') {
+				result.push(value)
+			} else {
+				Object.values(value).forEach((error) => result.push(error))
+			}
+		})
+		 return result.length >=3 ? [result[0]] : result
+	}
+
   return (
     <div className="cropper">
       <div style={{ width: "100%" }}>
-        <input type="file" onChange={onChange} />
-        <br />
+				<FieldArray name = "avatar">
+					{(arrayHelper) => (
+						<>
+						<p>
+        <input type="file" onChange={e => {
+					e.preventDefault();
+					const files = e.target.files
+					const file = getFileSchema(files[0]) 
+					const reader = new FileReader();
+					if (!file) {
+						arrayHelper.remove(0)
+						setImage(defaultSrc)
+					}
+					if (Array.isArray(values.avatar)) {
+						arrayHelper.replace(0, file)
+					} else {
+						arrayHelper.push(file)
+					}
+					reader.onload = () => {
+						setImage(reader.result);
+					};
+					reader.readAsDataURL(files[0]);
+				}} name="avatar"/>
+				</p>
+				{errors.avatar ? getArrErrorMessages(errors.avatar).map((error) => (
+						error && <div key = {error} className="validate__error">{error}</div>
+					)) : <br/>}
+				</>
+					)}
+				</FieldArray>
         <br />
         <Cropper
           ref={cropperRef}

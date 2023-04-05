@@ -52,7 +52,7 @@ function Entries({ allPosts, setAllPosts, ...props }) {
     fetchPosts();
   }, [page, filter, allPosts, props.post]);
 
-  const onDeletePost = (post, number) => {
+  const onDeletePost = (post) => {
     setPosts(posts.filter((p) => p.id !== post));
     setAllPosts(allPosts.filter((p) => p.id !== post));
     if (allPosts.length % limit === 1) {
