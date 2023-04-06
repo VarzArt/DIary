@@ -1,17 +1,16 @@
-.modal__active {
+.modal__main {
   position: fixed;
   width: 100%;
-  height: max-content;
   bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
   display: flex;
   align-items: center;
   justify-content: center;
+  visibility: hidden;
 }
 
-.modal__main {
-  display: none;
+.active {
+  visibility: visible;
 }
 
 .modal__content {
@@ -20,7 +19,7 @@
   border-radius: 1rem;
   width: 100%;
   box-shadow: 0 0 2rem lightgray;
-  height: max-content;
+  max-height: 800px;
   padding: 1rem;
   display: flex;
   flex-direction: column;
@@ -95,7 +94,7 @@
 .deleteModal {
   position: fixed;
   width: 100%;
-  height: 100%;
+  min-height: 800px;
   justify-content: center;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.9);

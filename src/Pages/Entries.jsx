@@ -66,12 +66,11 @@ function Entries({ allPosts, setAllPosts, ...props }) {
         <FilterForm setPage={setPage} filter={filter} setFilter={setFilter} />
       </div>
       <div className="creation__btn">
-        <Link to="/create">
+        <Link to="/create" style={{ margin: "2rem" }}>
           <MyButton
             src={addBtn}
             style={{
               fontSize: "2rem",
-              margin: "2rem",
               backdropFilter: "blur(1rem)",
             }}
           >

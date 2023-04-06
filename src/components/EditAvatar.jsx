@@ -4,23 +4,19 @@ import "cropperjs/dist/cropper.css";
 import "../styles/Cropper.css";
 import { FieldArray } from "formik";
 
-const AvatarFile = ({ errors, values, post, setPost }) => {
-  const defaultSrc =
-    "https://img1.akspic.ru/crops/8/0/6/8/3/138608/138608-anonimnye_narkomany-elektronnoe_ustrojstvo-haker-nebo-illustracia-1280x720.jpg";
+const EditAvatar = ({ errors, values, avatar, setAvatar }) => {
+  const defaultSrc = avatar;
 
   const [image, setImage] = useState(defaultSrc);
   const [cropData, setCropData] = useState("");
-  const cropperRef = createRef();
+  const cropperRef = createRef(defaultSrc);
 
   const getCropData = (e) => {
     e.preventDefault();
     if (typeof cropperRef.current?.cropper !== "undefined") {
       setCropData(cropperRef.current?.cropper.getCroppedCanvas().toDataURL());
-      setPost({
-        ...post,
-        avatar: cropperRef.current?.cropper.getCroppedCanvas().toDataURL(),
-      });
     }
+    setAvatar(cropperRef.current?.cropper.getCroppedCanvas().toDataURL());
   };
 
   const getFileSchema = (file) =>
@@ -46,13 +42,12 @@ const AvatarFile = ({ errors, values, post, setPost }) => {
 
   return (
     <div className="cropper">
-      <div className="cropper__wrapper">
+      <div style={{ width: "100%" }}>
         <FieldArray name="avatar">
           {(arrayHelper) => (
             <>
               <p>
                 <input
-                  onMount
                   type="file"
                   name="avatar"
                   onChange={(e) => {
@@ -73,9 +68,8 @@ const AvatarFile = ({ errors, values, post, setPost }) => {
                       setImage(reader.result);
                     };
                     reader.readAsDataURL(files[0]);
-                    setCropData("");
+                    console.log(files);
                   }}
-                  style={{ alignSelf: "flex-start" }}
                 />
               </p>
               {errors.avatar ? (
@@ -94,47 +88,55 @@ const AvatarFile = ({ errors, values, post, setPost }) => {
           )}
         </FieldArray>
         <br />
-        <Cropper
-          ref={cropperRef}
-          style={{ height: 400, width: "80%", margin: "1rem 0" }}
-          zoomTo={0.5}
-          initialAspectRatio={1}
-          preview=".img-preview"
-          src={image}
-          viewMode={1}
-          minCropBoxHeight={10}
-          minCropBoxWidth={10}
-          background={false}
-          responsive={true}
-          autoCropArea={1}
-          checkOrientation={false}
-          guides={true}
-        />
-      </div>
-      <button className="cropper_btn" onClick={getCropData}>
-        Crop Image
-      </button>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          width: "80%",
-        }}
-      >
-        <div className="box" style={{ width: "50%", float: "right" }}>
-          <h1 style={{ padding: "1rem" }}>Preview</h1>
-          <div
-            className="img-preview"
-            style={{ width: "100%", height: "300px" }}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-evenly",
+          }}
+        >
+          <Cropper
+            ref={cropperRef}
+            style={{ height: 400, width: "40%", margin: "1rem 0" }}
+            zoomTo={0.5}
+            initialAspectRatio={1}
+            src={image}
+            viewMode={1}
+            minCropBoxHeight={10}
+            minCropBoxWidth={10}
+            background={false}
+            responsive={true}
+            autoCropArea={1}
+            checkOrientation={false}
+            guides={true}
           />
-        </div>
-        <div className="box" style={{ width: "50%", height: "300px" }}>
-          <h1 style={{ padding: "1rem", textAlign: "end" }}>Crop</h1>
-          <img
-            style={{ width: "335px", height: "256px", float: "right" }}
-            src={cropData}
-            alt="cropped"
-          />
+
+          <button className="cropper_btn" onClick={getCropData}>
+            Crop Image
+          </button>
+          <div className="box" style={{ width: "40%", height: "max-content" }}>
+            <h1
+              style={{
+                padding: "1rem",
+                textAlign: "center",
+                fontSize: "1.5rem",
+              }}
+            >
+              Cropped image
+            </h1>
+            <div className="crop__wrapper">
+              <img
+                style={{
+                  width: "335px",
+                  height: "256px",
+                  float: "right",
+                  textAlign: "center",
+                }}
+                src={cropData}
+                alt="cropped"
+              />
+            </div>
+          </div>
         </div>
       </div>
       <br style={{ clear: "both" }} />
@@ -142,4 +144,4 @@ const AvatarFile = ({ errors, values, post, setPost }) => {
   );
 };
 
-export default AvatarFile;
+export default EditAvatar;

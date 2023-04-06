@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import MyButton from "../button/MyButton";
 import MyInput from "../input/MyInput";
 import done from "../../../assets/images/done.svg";
@@ -9,134 +9,154 @@ import trash from "../../../assets/images/trash.svg";
 import DeleteModal from "../deleteModal/deleteModal";
 import Tooltip from "../tooltip/Tooltip";
 import undo from "../../../assets/images/undo.svg";
+import { Formik } from "formik";
+import * as yup from "yup";
+import EditAvatar from "../../EditAvatar";
 
 const Modal = ({ active, setActive, post, ...props }) => {
-  const [editPost, setEditPost] = useState({
-    title: post.title,
-    body: post.body,
-  });
+  const [avatar, setAvatar] = useState(post.avatar);
   const [visible, setVisible] = useState(false);
   const [tooltip, setTooltip] = useState({ delete: false, edit: false });
-  const [titleDirty, setTitleDirty] = useState(false);
-  const [bodyDirty, setBodyDirty] = useState(false);
-  const [titleError, setTitleError] = useState("");
-  const [bodyError, setBodyError] = useState("");
-  const [formValid, setFormValid] = useState(false);
 
-  useEffect(() => {
-    if (titleError || bodyError) {
-      setFormValid(false);
-    } else {
-      setFormValid(true);
-    }
-  }, [titleError, bodyError]);
-
-  const blurHandler = (e) => {
-    if (e.target.name === "title" && e.target.value.length < 3) {
-      setTitleDirty(true);
-    } else if (e.target.name === "body" && e.target.value.length < 10) {
-      setBodyDirty(true);
-    }
+  const onEditPost = (values) => {
+    props.setPost({
+      ...post,
+      title: values.title,
+      body: values.body,
+      avatar: avatar,
+    });
   };
 
-  const titleHandler = (e) => {
-    setEditPost({ ...editPost, title: e.target.value });
-    if (e.target.value.length < 3) {
-      setTitleError("The title must be longer than 3 characters!");
-      if (!e.target.value) {
-        setTitleError("The title cannot be empty");
-      }
-    } else {
-      setTitleError("");
-    }
-  };
-
-  const bodyHandler = (e) => {
-    setEditPost({ ...editPost, body: e.target.value });
-    if (e.target.value.length < 10) {
-      setBodyError("The description must be longer than 10 characters!");
-      if (!e.target.value) {
-        setBodyError("The description cannot be empty");
-      }
-    } else {
-      setBodyError("");
-    }
-  };
-
-  const onEditPost = () => {
-    props.setPost({ ...post, title: "", body: "" });
-  };
-
-  const confirmEditPost = () => {
+  const confirmEditPost = (values) => {
     axios.patch(`http://localhost:3000/posts/${post.id}`, {
-      title: editPost.title,
-      body: editPost.body,
-      avatar: editPost.avatar,
+      title: values.title,
+      body: values.body,
+      avatar: avatar,
     });
     setTooltip({ ...tooltip, edit: true });
     setTimeout(() => {
       setActive(false);
-      onEditPost();
+      onEditPost(values);
       setTooltip({ ...tooltip, edit: false });
     }, 1500);
   };
 
-  const undoChanges = () => {
-    setEditPost({
-      title: post.title,
-      body: post.body,
-    });
-    setTitleError("");
-    setBodyError("");
+  const undoChanges = (values) => {
+    values.title = post.title;
+    values.body = post.body;
   };
 
-  const rootClass = active ? "modal__active" : "modal__main";
+  const validationSchema = yup.object().shape({
+    title: yup
+      .string()
+      .typeError("The field must be a string")
+      .required("The title field must be mandatory!"),
+    body: yup
+      .string()
+      .typeError("The description must be a string")
+      .required("The description field must be mandatory!"),
+    avatar: yup.array().of(
+      yup
+        .object()
+        .shape({
+          file: yup
+            .mixed()
+            .test("fileSize", "The file size is more than 5 MB!", (value) => {
+              if (!value) return false;
+              return value.size < 5242880;
+            }),
+          type: yup
+            .string()
+            .oneOf(
+              ["image/gif", "image/png", "image/svg+xml", "image/jpeg"],
+              "Add a file with the correct format(png, jpg, gif, svg)!"
+            ),
+          name: yup.string(),
+        })
+        .typeError("Add a file!")
+    ),
+  });
+
+  const rootClass = active ? "modal__main active" : "modal__main";
 
   return (
     <div className={rootClass}>
-      <div className="modal__content" onClick={(e) => e.stopPropagation()}>
-        <h1 className="modal__title">Edit entry</h1>
-        <div className="modal__titleBlock">
-          Edit title:
-          <MyInput
-            name="title"
-            type="text"
-            value={editPost.title}
-            onChange={(e) => titleHandler(e)}
-            onBlur={(e) => blurHandler(e)}
-          />
-        </div>
-        {titleDirty && titleError && (
-          <div className="validate__error">{titleError}</div>
+      <Formik
+        initialValues={{
+          title: post.title,
+          body: post.body,
+          avatar: undefined,
+        }}
+        validateOnBlur
+        onSubmit={(values) => confirmEditPost(values)}
+        validationSchema={validationSchema}
+      >
+        {({
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+          isValid,
+          handleSubmit,
+          handleReset,
+        }) => (
+          <div className="modal__content">
+            <h1 className="modal__title">Edit entry</h1>
+            <div className="modal__titleBlock">
+              Edit title:
+              <MyInput
+                name="title"
+                type="text"
+                value={values.title}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+            </div>
+            {touched.title && errors.title && (
+              <div className="validate__error">{errors.title}</div>
+            )}
+            <div className="modal__bodyBlock">
+              Edit body:
+              <MyInput
+                name="body"
+                type="text"
+                value={values.body}
+                onChange={handleChange}
+                onBlur={handleBlur}
+              />
+            </div>
+            {touched.body && errors.body && (
+              <div className="validate__error">{errors.body}</div>
+            )}
+            <EditAvatar
+              setAvatar={setAvatar}
+              avatar={avatar}
+              errors={errors}
+              values={values}
+            />
+            <div className="modal__buttons">
+              <MyButton src={trash} onClick={() => setVisible(true)}>
+                Delete entry
+              </MyButton>
+              <MyButton
+                disabled={!isValid}
+                type="submit"
+                src={done}
+                onClick={(values) => handleSubmit(values)}
+              >
+                Confirm
+              </MyButton>
+              <MyButton src={undo} type="reset" onClick={handleReset}>
+                Undo Changes
+              </MyButton>
+              <MyButton src={backBtn} onClick={() => setActive(false)}>
+                Back to entries
+              </MyButton>
+            </div>
+          </div>
         )}
-        <div className="modal__bodyBlock">
-          Edit body:
-          <MyInput
-            name="body"
-            type="text"
-            value={editPost.body}
-            onChange={(e) => bodyHandler(e)}
-            onBlur={(e) => blurHandler(e)}
-          />
-        </div>
-        {bodyDirty && bodyError && (
-          <div className="validate__error">{bodyError}</div>
-        )}
-        <div className="modal__buttons">
-          <MyButton src={trash} onClick={() => setVisible(true)}>
-            Delete entry
-          </MyButton>
-          <MyButton disabled={!formValid} src={done} onClick={confirmEditPost}>
-            Confirm
-          </MyButton>
-          <MyButton src={undo} onClick={undoChanges}>
-            Undo Changes
-          </MyButton>
-          <MyButton src={backBtn} onClick={() => setActive(false)}>
-            Back to entries
-          </MyButton>
-        </div>
-      </div>
+      </Formik>
       <DeleteModal
         onDeletePost={props.onDeletePost}
         tooltip={tooltip}
