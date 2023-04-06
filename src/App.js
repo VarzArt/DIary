@@ -15,6 +15,7 @@ function App() {
   });
 
   const [allPosts, setAllPosts] = useState([]);
+  const [allComments, setAllComments] = useState([]);
 
   useEffect(() => {
     const fetchAllPosts = async () => {
@@ -28,6 +29,18 @@ function App() {
     fetchAllPosts();
   }, []);
 
+  useEffect(() => {
+    const fetchAllComments = async () => {
+      try {
+        const responseComments = await PostService.getAllComments();
+        setAllComments(responseComments.data);
+      } catch (error) {
+        console.log("Error receiving diary comments", JSON.parse(error), error);
+      }
+    };
+    fetchAllComments();
+  }, [allPosts]);
+
   return (
     <BrowserRouter>
       <Routes>
@@ -39,6 +52,8 @@ function App() {
               setAllPosts={setAllPosts}
               setPost={setPost}
               post={post}
+              allComments={allComments}
+              setAllComments={setAllComments}
             />
           }
         />

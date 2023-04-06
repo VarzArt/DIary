@@ -87,6 +87,8 @@ function Entries({ allPosts, setAllPosts, ...props }) {
           posts={posts}
           title="List of entries"
           setPost={props.setPost}
+          allComments={props.allComments}
+          setAllComments={props.setAllComments}
         />
       )}
       <Pagination page={page} changePage={changePage} totalPages={totalPages} />

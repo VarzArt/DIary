@@ -41,11 +41,6 @@ const Modal = ({ active, setActive, post, ...props }) => {
     }, 1500);
   };
 
-  const undoChanges = (values) => {
-    values.title = post.title;
-    values.body = post.body;
-  };
-
   const validationSchema = yup.object().shape({
     title: yup
       .string()

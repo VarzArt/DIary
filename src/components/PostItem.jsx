@@ -8,7 +8,6 @@ import Modal from "./UI/modal/Modal";
 import PostService from "../API/PostService";
 
 const PostItem = (props) => {
-  const [allComments, setAllComments] = useState([]);
   const [comments, setComments] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
   const [visibleComments, setVisibleComments] = useState(false);
@@ -18,7 +17,7 @@ const PostItem = (props) => {
     setComments([
       ...comments,
       {
-        id: allComments[allComments.length - 1].id + 1,
+        id: props.allComments[props.allComments.length - 1].id + 1,
         name: "Varzumov Nikita Andreevich",
         body: commentBody,
         role: "admin",
@@ -26,10 +25,10 @@ const PostItem = (props) => {
           "https://ds.obmenvsemfiles.net/fo/get/5677916/neon_mask_boy_city_4k_6h-nashobmen.org.jpg",
       },
     ]);
-    setAllComments([
-      ...allComments,
+    props.setAllComments([
+      ...props.allComments,
       {
-        id: allComments[allComments.length - 1].id + 1,
+        id: props.allComments[props.allComments.length - 1].id + 1,
         name: "Varzumov Nikita Andreevich",
         body: commentBody,
         role: "admin",
@@ -41,15 +40,14 @@ const PostItem = (props) => {
 
   const onDeleteComment = (comment) => {
     setComments(comments.filter((c) => c.id !== comment.id));
-		setAllComments(allComments.filter(c => c.id !== comment.id))
+    props.setAllComments(props.allComments.filter((c) => c.id !== comment.id));
   };
 
   useEffect(() => {
     const fetchComments = async () => {
       try {
         const response = await PostService.getComments(props.post.id);
-        const responseAll = await PostService.getAllComments();
-        setAllComments(responseAll.data);
+
         setComments(response.data);
       } catch (error) {
         console.log("Error receiving comments", JSON.parse(error), error);
@@ -102,7 +100,7 @@ const PostItem = (props) => {
         active={modalVisible}
         setActive={setModalVisible}
         post={props.post}
-				setPost = {props.setPost}
+        setPost={props.setPost}
       />
     </div>
   );

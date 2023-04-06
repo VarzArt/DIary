@@ -14,6 +14,8 @@ const PostList = ({ posts, title, ...props }) => {
             onDeletePost={props.onDeletePost}
             key={post.id}
             setPost={props.setPost}
+            allComments={props.allComments}
+            setAllComments={props.setAllComments}
           />
         ))
       ) : (

@@ -52,7 +52,6 @@ const AvatarFile = ({ errors, values, post, setPost }) => {
             <>
               <p>
                 <input
-                  onMount
                   type="file"
                   name="avatar"
                   onChange={(e) => {
@@ -75,7 +74,6 @@ const AvatarFile = ({ errors, values, post, setPost }) => {
                     reader.readAsDataURL(files[0]);
                     setCropData("");
                   }}
-                  style={{ alignSelf: "flex-start" }}
                 />
               </p>
               {errors.avatar ? (
