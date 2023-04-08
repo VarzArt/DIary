@@ -9,6 +9,7 @@ import Pagination from "../components/UI/pagination/Pagination";
 import MyButton from "../components/UI/button/MyButton";
 import addBtn from "../assets/images/add.svg";
 import { Link } from "react-router-dom";
+import moment from "moment/moment";
 
 function Entries({ allPosts, setAllPosts, ...props }) {
   const [posts, setPosts] = useState([]);
@@ -18,30 +19,27 @@ function Entries({ allPosts, setAllPosts, ...props }) {
   const [filter, setFilter] = useState({
     sort: "",
     query: "",
-    dateBot: new Date(0).toDateString(),
-    dateTop: new Date(2639997412690).toDateString(),
+    dateBot: moment()
+      .subtract(3, "years")
+      .add(1, "day")
+      .utc()
+      .local()
+      .format("YYYY-MM-DD"),
+    dateTop: moment().add(1, "day").utc().local().format("YYYY-MM-DD"),
   });
 
-  const getPages = (response) => {
+  const [fetchPosts, isPostsLoading, postError] = useFetching(async () => {
+    const response = await PostService.getFilterAndSort(
+      limit,
+      page,
+      filter.sort,
+      filter.query,
+      Number(moment(filter.dateBot).format("x")),
+      Number(moment(filter.dateTop).format("x"))
+    );
     setPosts(response.data);
     const totalCount = response.headers["x-total-count"];
     setTotalPages(getPageCount(totalCount, limit));
-  };
-  const [fetchPosts, isPostsLoading, postError] = useFetching(async () => {
-    if (!filter.sort && !filter.query) {
-      const response = await PostService.getAll(limit, page);
-      getPages(response);
-    } else {
-      const response = await PostService.getFilterAndSort(
-        limit,
-        page,
-        filter.sort,
-        filter.query,
-        Date.parse(filter.dateBot),
-        Date.parse(filter.dateTop)
-      );
-      getPages(response);
-    }
   });
 
   const changePage = (page) => {

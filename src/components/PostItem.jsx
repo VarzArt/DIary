@@ -6,6 +6,7 @@ import Comments from "./Comments";
 import edit from "../assets/images/edit.svg";
 import Modal from "./UI/modal/Modal";
 import PostService from "../API/PostService";
+import moment from "moment";
 
 const PostItem = (props) => {
   const [comments, setComments] = useState([]);
@@ -56,7 +57,7 @@ const PostItem = (props) => {
     fetchComments();
   }, []);
 
-  const postDate = new Date(Number(props.post.date)).toLocaleString();
+  const postDate = moment(props.post.date).format("DD MMM YYYY HH:mm");
 
   return (
     <div className="post">

@@ -8,16 +8,6 @@ export default class PostService {
     return response;
   }
 
-  static async getAll(limit = 5, page = 1) {
-    const response = await axios.get(link, {
-      params: {
-        _limit: limit,
-        _page: page,
-      },
-    });
-    return response;
-  }
-
   static async getFilterAndSort(
     limit = 5,
     page = 1,

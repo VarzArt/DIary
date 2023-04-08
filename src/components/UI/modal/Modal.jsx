@@ -56,7 +56,7 @@ const Modal = ({ active, setActive, post, ...props }) => {
         .shape({
           file: yup
             .mixed()
-            .test("fileSize", "The file size is more than 5 MB!", (value) => {
+            .test("fileSize", "Add a file with correct size!", (value) => {
               if (!value) return false;
               return value.size < 5242880;
             }),

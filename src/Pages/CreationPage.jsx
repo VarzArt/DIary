@@ -9,19 +9,23 @@ import backBtn from "../assets/images/back.svg";
 import Tooltip from "../components/UI/tooltip/Tooltip";
 import { Formik } from "formik";
 import * as yup from "yup";
+import moment from "moment";
 
 const CreationPage = ({ post, setPost, allPosts, setAllPosts }) => {
   const navigate = useNavigate();
 
   const [tooltip, setTooltip] = useState(false);
 
-  const postAvatar = post.avatar;
+  const postAvatar =
+    post.avatar === "#" || post.avatar === undefined
+      ? "https://img1.akspic.ru/crops/8/0/6/8/3/138608/138608-anonimnye_narkomany-elektronnoe_ustrojstvo-haker-nebo-illustracia-1280x720.jpg"
+      : post.avatar;
 
   const addNewPost = (post) => {
     axios.post("http://localhost:3000/posts", {
       title: post.title[0].toUpperCase() + post.title.slice(1),
       body: post.body,
-      date: Date.now(),
+      date: Number(moment().utc().local().format("x")),
       avatar: postAvatar,
     });
     setAllPosts([
@@ -30,7 +34,7 @@ const CreationPage = ({ post, setPost, allPosts, setAllPosts }) => {
         id: allPosts[allPosts.length - 1].id + 1,
         title: post.title[0].toUpperCase() + post.title.slice(1),
         body: post.body,
-        date: Date.now(),
+        date: Number(moment().utc().local().format("x")),
         avatar: postAvatar,
       },
     ]);
